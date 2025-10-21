@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Console-style Blog</title>
+    <style>
+        :root{
+          --bg:#041014; /* near-black */
+          --panel:#001217;
+          --green:#00ff41; /* terminal green */
+          --muted: rgba(0,255,65,0.2);
+          --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace;
+        }
+        *{box-sizing:border-box}
+        html,body{height:100%}
+        body{
+          margin:0; background:linear-gradient(180deg,var(--bg),#001018 60%);
+          color:var(--green); font-family:var(--mono); -webkit-font-smoothing:antialiased;
+          display:flex; align-items:flex-start; justify-content:center; padding:40px;
+        }
+
+        .terminal {
+          width:min(980px,96vw);
+          background:linear-gradient(180deg,var(--panel),#00181a);
+          border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,0.7);
+          padding:18px; border:1px solid rgba(0,255,65,0.06);
+        }
+
+        .term-header{
+          display:flex; gap:8px; align-items:center; margin-bottom:12px;
+        }
+        .dots{display:flex; gap:6px}
+        .dot{width:12px;height:12px;border-radius:50%;opacity:0.9}
+        .dot.red{background:#ff5f56}
+        .dot.yellow{background:#ffbd2e}
+        .dot.green{background:#27c93f}
+
+        h1{font-size:16px;margin:0 0 8px 0;color:var(--green)}
+        .meta{font-size:12px; color:var(--muted); margin-bottom:6px}
+
+        .screen{
+          background:linear-gradient(180deg, rgba(0,0,0,0.04), transparent);
+          padding:16px; border-radius:8px; min-height:320px; max-height:60vh; overflow:auto;
+          line-height:1.5; white-space:pre-wrap; font-size:14px;
+        }
+
+        .post{margin-bottom:14px}
+        .cmd{display:inline-block; color:var(--green);}
+        .prompt::before{content:"> "; color:var(--green)}
+        .title{color:var(--green); font-weight:700}
+        .time{color:var(--muted); margin-left:8px; font-size:12px}
+
+        /* input area */
+        .composer{display:flex; gap:8px; margin-top:12px; align-items:flex-start}
+        .input-wrap{flex:1}
+        textarea{
+          width:100%; min-height:64px; resize:vertical; font-family:var(--mono); font-size:13px;
+          background:transparent; border:1px solid rgba(0,255,65,0.06); color:var(--green); padding:10px; border-radius:6px;
+        }
+        button{
+          background:transparent; color:var(--green); border:1px solid rgba(0,255,65,0.12); padding:10px 12px; border-radius:8px; cursor:pointer;
+        }
+        button:hover{background:rgba(0,255,65,0.02)}
+
+        /* typing cursor */
+        .cursor{display:inline-block; width:8px; height:18px; background:var(--green); margin-left:6px; animation:blink 1s steps(2,start) infinite}
+        @keyframes blink{to{opacity:0}}
+
+        /* scrollbar style */
+        .screen::-webkit-scrollbar{width:10px}
+        .screen::-webkit-scrollbar-thumb{background:rgba(0,255,65,0.08); border-radius:10px}
+
+        /* small screens */
+        @media (max-width:520px){
+          .terminal{padding:12px}
+          textarea{min-height:80px}
+        }
+    </style>
+</head>
+<body>
+<main class="terminal" role="main" aria-labelledby="title">
+    <div class="term-header">
+        <div class="dots" aria-hidden>
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+        </div>
+        <div style="margin-left:8px">
+            <h1 id="title">Blog — timeline</h1>
+            <div class="meta"></div>
+        </div>
+    </div>
+
+    <section class="screen" id="screen" tabindex="0" aria-live="polite">
+        <!-- sample posts -->
+        <div class="post"><span class="prompt title">2025-10-20</span> <span class="time">— Deployed flight search API w/ date-flex &amp; lowest-fare</span>
+
+            <div style="margin-top:6px">Developed Flight Search API with date-flex, layover, and lowest-fare features. Integrated Amadeus API &amp; MongoDB caching; improved search speed under high traffic.</div>
+        </div>
+
+        <div class="post"><span class="prompt title">2025-09-15</span> <span class="time">— Identity and access</span>
+            <div style="margin-top:6px">Delivered secure SSO and profile management systems with SAML &amp; token-based auth. Implemented RBAC and audit logging for compliance.</div>
+        </div>
+
+        <div id="live"></div>
+    </section>
+
+
+</main>
+
+
+</body>
+</html>
